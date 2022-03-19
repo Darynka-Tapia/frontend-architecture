@@ -386,7 +386,6 @@ main {
 .plans-container-slider{
     display: flex;
     gap: 20px;
-    max-width: 330px;
     height: 316px;
     padding: 0 40px;
     overflow-x: auto;
