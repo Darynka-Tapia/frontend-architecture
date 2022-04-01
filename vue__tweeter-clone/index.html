@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introductions to vue</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3"></script>
+    <div id="app">
+    </div>
+    <script>
+        const vm = Vue.createApp({
+            data(){
+                return{
+                    estado: 'Iniciar Sesión',
+                    open: false,
+                    username: ''
+                };
+            },
+            watch:{
+                open(now, old){
+                    this.estado = now ? 'App list' : 'Iniciar Sesión ';
+                }
+            },
+            computed:{
+                nameButton(){
+                    return this.open ? 'Cerrar' : 'Abrir';
+                }
+            },
+            template: `
+            <div class="container"
+            :class="{'open': open, 'close': !open}">
+                <div class="login" v-if="open">
+                    <div class="container-img">
+                        <img class="icono" src="assets/twitter-logo.png"/>  
+                    </div>
+                    <h2 class="titulo">Inicia sesión en Twitter</h2>
+                    <span class="btn-social google"
+                    @click=" open = !open"> 
+                        <img src="assets/google.png"/>
+                        Iniciar sesión con Google
+                    </span>
+                    <span class="btn-social apple"
+                    @click=" open = !open"> 
+                        <img src="assets/apple.png"/>
+                        Iniciar sesión con Apple
+                    </span>
+                    <div class="division">
+                        <label> o </label>
+                    </div>
+
+                    <input 
+                        v-model="username" 
+                        type="text" 
+                        class="username" 
+                        placeholder="Teléfono, correo electrónico o nombre"
+                    >  
+                    <button class="btn-siguiente" @click=" open = !open">Siguiente</button>  
+                    <button class="btn-forgotten-password">¿Olvidaste tu contraseña?</button>
+
+                    <span class="no-account">¿No tienes cuenta? <a href="#">Regístrate</a></span>
+                    <div class="creditos">
+                        <div> Iconos diseñados por <a href="https://www.flaticon.es/autores/those-icons" title="Those Icons"> Those Icons </a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es'</a></div>
+                        <a href="https://www.flaticon.com/free-icons/verified" title="verified icons">Verified icons created by Rizki Ahmad Fauzi - Flaticon</a>
+                    </div>
+                    
+                </div>
+                <div v-else class="contain-wall">
+                    <div class="header">
+                        <div class="name">
+                            <span>Platzi</span>
+                            <img src="assets/verify.png" alt="verificado"/>
+                        </div>
+                        <div class="number-tweets"> 133,6 mil Tweets</div>
+                    </div>
+                    <div class="banner-logo">
+                        <div class="banner">
+                            <img src="https://pbs.twimg.com/profile_banners/64863875/1647869925/1080x360"/>
+                            <div class="logo">
+                                <img src="assets/platzi-logo.jpg" />
+                            </div></div>
+                        <div class="menu">
+                            <span class="icon"><img src="assets/menu.png" class="icon-menu"/></span>
+                            <span class="icon"><img src="assets/email.png" class="icon-menu"/> </span>
+                            <span class="icon"><img src="assets/add.png" class="icon-menu"/> </span>
+                            <span class="btn-follow"> Siguiendo </span> 
+                        </div>
+                        <div class="user-info">
+                            <div class="name">
+                                <span>Platzi</span>
+                                <img src="assets/verify.png" alt="verificado"/>
+                            </div>
+                            <span class="user-path">@platzi</span>
+                            <p class="description">Educación profesional efectiva 🚀</p>
+                        </div>
+                        <div class="menu-tweets">
+                                <span class="selected">Tweets</span>
+                                <span>Tweets y respuestas</span>
+                                <span>Me gusta</span>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="item">
+                            <h4>Titulo</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur dolore quod culpa maiores architecto ullam accusantium molestias tempore! Nesciunt id, debitis ullam quibusdam odio corrupti alias architecto in modi deserunt.</p>
+                        </div>
+                    </div>
+                <button @click=" open = !open">{{nameButton}}</button>
+                </div>
+            </div>
+            `
+        }).mount('#app');
+    </script>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Anybody', cursive;
+        }
+        .container{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100px;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
+        /* .open{ background-color: #b5e7a0; }
+        .close{ background-color: #eca1a6; } */
+
+        .login{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            padding-top: 10px;
+        }
+        .container-img{
+            height: 50px;
+        }
+        .icono{
+            width: 25px; 
+            height: 25px;
+            object-fit: contain;
+        }
+        .titulo{
+            margin: 19px 0;
+        }
+        .btn-social{
+            width: 300px;
+            height: 40px;
+            border: 1px solid lightgray;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 12px 0px;
+            font-size: 14px;
+        }
+        .btn-social>img{
+            width: 20px; 
+            height: 20px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+        .division{
+            border-top:1px solid lightgray;
+            width: 300px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .division>label{
+            margin-top: -8px;
+            display: flex;
+            justify-content: center;
+            background-color: white;
+            width: 30px;
+        }
+        .username{
+            width: 300px;
+            height: 40px;
+            font-size: 17px;
+            line-height: 24px;
+            padding: 8px 5px;
+            font-weight: 400;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            margin: 12px 0px;
+        }
+        .btn-siguiente, .btn-forgotten-password{
+            margin: 12px 0px;
+            width: 300px;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+        }
+        .btn-siguiente{
+            color: white;
+            background-color: black;
+        }
+        .btn-forgotten-password{
+            color: black;
+            background-color: white;
+            border: 1px solid lightgray;
+        }
+        .no-account{
+            width: 100%;
+            text-align: left;
+            font-size: 15px;
+            color: grey;
+            margin-top: 40px;
+        }
+        .no-account > a{
+            color: rgb(29, 155, 240);
+            margin-left: 2px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .creditos{
+            font-size: 10px;
+            height: 40px;
+            overflow: auto;
+            margin-top: 20px;
+        }
+        .contain-wall{
+            width: 100%;
+            min-height: 100vh;
+        }
+        .header{
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0px 20px;
+        }
+        .header>.number-tweets{
+            font-size: 12px;
+            color: gray;
+        }
+        .header>.name>img{
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+            margin-left: 5px;
+        }
+        .banner-logo .banner>img{
+            width: 100%;
+            object-fit: cover;
+        }
+        .banner{
+            position: relative;
+        }
+        .logo{
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            width: 75px;
+            height: 75px;
+            border: 2px solid white;
+            border-radius: 75px;
+            overflow: hidden;
+        }
+        .logo > img{
+            width: 75px;
+            height: 75px;
+            object-fit: cover;
+        }
+        .menu{
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            margin: 0 10px;
+        }
+        .menu > span.icon {
+            padding: 5px;
+            border-radius: 50px;
+            width: 20px;
+            height: 20px;
+            border: 1px solid lightgray;
+            margin: 0 2px;
+        }
+        .icon-menu {
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+        }
+        .btn-follow{
+            padding: 5px;
+            border-radius: 50px;
+            border: 1px solid lightgray;
+            width: 96px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 2px;
+        }
+        .user-info{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            /* align-items: center; */ 
+            margin: 15px 20px;
+            text-align: left;
+        
+        }
+        .name{
+            display: flex;
+            align-items: center;
+        }
+        .name>span{
+            font-weight: 800;
+            font-size: 19px;
+        }
+        .name>img{
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+            margin-left: 5px;
+        }
+        .user-info>.user-path{
+            color: gray;
+            font-size: 14px;
+        }
+        .user-info>.description{
+            font-size: 14px;
+        }
+        .menu-tweets{
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            align-items: center;
+            text-decoration: none;
+            list-style: none;
+            border-bottom: 1px solid lightgray;
+            font-size: 14px;
+        }
+        .menu-tweets>span{
+            margin: 0 auto;
+            height: 30px;
+        }
+        .menu-tweets > .selected{
+            font-weight: 600;
+            border-bottom: 4px solid rgb(29, 155, 240);
+        }
+    </style>
+</body>
+</html>
