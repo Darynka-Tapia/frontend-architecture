@@ -20,7 +20,33 @@
                 return{
                     estado: 'Iniciar Sesión',
                     open: false,
-                    username: ''
+                    username: '',
+                    listTweets: [
+                        {
+                            name: 'Platzi', 
+                            path: '@platzi', 
+                            time: '1h', 
+                            content: 'Aprovecha al 💯 tu suscripción a Platzi 💚 '
+                        },
+                        {
+                            name: 'Platzi', 
+                            path: '@platzi', 
+                            time: '7h', 
+                            content: '🔴 Mejora tus habilidades profesionales con esta LIVE CLASS'
+                        },
+                        {
+                            name: 'Platzi', 
+                            path: '@platzi', 
+                            time: '31 mar', 
+                            content: `💚 Sé amable contigo. Con tus emociones, tus acciones, tus aprendizajes y tus miedos. `
+                        },
+                        {
+                            name: 'Platzi', 
+                            path: '@platzi', 
+                            time: '31 mar', 
+                            content: `Invierte en ti  y cambia tu vida para siempre 💚`
+                        }
+                    ]
                 };
             },
             watch:{
@@ -36,7 +62,7 @@
             template: `
             <div class="container"
             :class="{'open': open, 'close': !open}">
-                <div class="login" v-if="!open">
+                <div class="login" v-if="open">
                     <div class="container-img">
                         <img class="icono" src="assets/twitter-logo.png"/>  
                     </div>
@@ -68,16 +94,28 @@
                     <div class="creditos">
                         <div> Iconos diseñados por <a href="https://www.flaticon.es/autores/those-icons" title="Those Icons"> Those Icons </a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es'</a></div>
                         <a href="https://www.flaticon.com/free-icons/verified" title="verified icons">Verified icons created by Rizki Ahmad Fauzi - Flaticon</a>
+                        <a href="https://www.flaticon.es/iconos-gratis/comentario" title="comentario iconos">Comentario iconos creados por Freepik - Flaticon</a>
+                        <div> Iconos diseñados por <a href="https://www.freepik.com" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es'</a></div>
+                        <a href="https://www.flaticon.es/iconos-gratis/comentario" title="comentario iconos">Comentario iconos creados por Freepik - Flaticon</a>
+                        <a href="https://www.flaticon.es/iconos-gratis/corazon" title="corazón iconos">Corazón iconos creados por Those Icons - Flaticon</a>
+                        <a href="https://www.flaticon.es/iconos-gratis/subir" title="subir iconos">Subir iconos creados por Freepik - Flaticon</a>
+                        <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by dmitri13 - Flaticon</a>
+
                     </div>
                     
                 </div>
                 <div v-else class="contain-wall">
                     <div class="header">
-                        <div class="name">
-                            <span>Platzi</span>
-                            <img src="assets/verify.png" alt="verificado"/>
+                        <div class="title-page">
+                            <div class="name">
+                                <span>Platzi</span>
+                                <img src="assets/verify.png" alt="verificado"/>
+                            </div>
+                            <div class="number-tweets"> 133,6 mil Tweets</div>
                         </div>
-                        <div class="number-tweets"> 133,6 mil Tweets</div>
+                        <div class="logout" @click=" open = !open">
+                            <img src="assets/logout.png"/>    
+                        </div>
                     </div>
                     <div class="banner-logo">
                         <div class="banner">
@@ -104,14 +142,41 @@
                                 <span>Tweets y respuestas</span>
                                 <span>Me gusta</span>
                         </div>
-                    </div>
-                    <div class="list">
-                        <div class="item">
-                            <h4>Titulo</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur dolore quod culpa maiores architecto ullam accusantium molestias tempore! Nesciunt id, debitis ullam quibusdam odio corrupti alias architecto in modi deserunt.</p>
+                        <div class="listado-tweets">
+                            <div class="tweet"  v-for="tweet in listTweets">
+                                <div class="teewt-user-img"><img src="assets/platzi-logo.jpg" /></div>
+                                <div class="tweet-description">
+                                    <p class="teewt-user">
+                                        <span class="name-tweet">
+                                            {{tweet.name}} 
+                                            <img src="assets/verify.png" alt="verificado"/>
+                                        </span>
+                                        <span class="path-tweet">{{tweet.path}}</span>
+                                        <span class="time-tweet">• {{tweet.time}}</span>
+                                    </p>
+                                    <p class="tweet-content">{{tweet.content}}</p>
+                                    
+                                    <div class="tweet-icons">
+                                        <div class="icon-contain">
+                                            <img class="item-tweet" src="assets/burbuja.png"/>
+                                            <span class="icon-number">2</span>
+                                        </div>
+                                        <div class="icon-contain">
+                                            <img class="item-tweet" src="assets/flechas.png"/>
+                                            <span class="icon-number">3</span>
+                                        </div>
+                                        <div class="icon-contain">
+                                            <img class="item-tweet" src="assets/corazon.png"/>
+                                            <span class="icon-number">47</span>
+                                        </div>
+                                        <div class="icon-contain">
+                                            <img class="item-tweet" src="assets/subir.png"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
                         </div>
                     </div>
-                <button @click=" open = !open">{{nameButton}}</button>
                 </div>
             </div>
             `
@@ -204,6 +269,7 @@
             border: 1px solid lightgray;
             border-radius: 5px;
             margin: 12px 0px;
+            box-sizing: border-box;
         }
         .btn-siguiente, .btn-forgotten-password{
             margin: 12px 0px;
@@ -246,25 +312,36 @@
             min-height: 100vh;
         }
         .header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             height: 50px;
+            margin: 0px 20px;
+        }
+        .title-page{
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            margin: 0px 20px;
         }
-        .header>.number-tweets{
+        .title-page>.number-tweets{
             font-size: 12px;
             color: gray;
         }
-        .header>.name>img{
+        .title-page>.name>img{
             width: 20px;
             height: 20px;
             object-fit: cover;
             margin-left: 5px;
         }
+        .header > .logout > img{
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
         .banner-logo .banner>img{
             width: 100%;
+            height: 150px;
             object-fit: cover;
         }
         .banner{
@@ -272,7 +349,7 @@
         }
         .logo{
             position: absolute;
-            top: 80px;
+            top: 118px;
             left: 20px;
             width: 75px;
             height: 75px;
@@ -289,7 +366,7 @@
             display: flex;
             flex-direction: row;
             justify-content: end;
-            margin: 0 10px;
+            margin: 0 3px;
         }
         .menu > span.icon {
             padding: 5px;
@@ -363,6 +440,72 @@
         .menu-tweets > .selected{
             font-weight: 600;
             border-bottom: 4px solid rgb(29, 155, 240);
+        }
+        
+        .listado-tweets .tweet{
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            padding: 10px 0px;
+            border-bottom: 1px solid lightgray;
+        }
+        .teewt-user-img > img{
+            width: 40px;
+            height: 40px;
+            border-radius:60px ;
+            
+        }
+        .tweet-description .teewt-user{
+            display: flex;
+            text-align: start;
+        }
+        .teewt-user>.name-tweet{
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .name-tweet > img{
+            width: 15px;
+            height: 15px;
+            object-fit: cover;
+            margin-left:3px;
+        }
+        .path-tweet, .time-tweet{
+            color:rgb(83, 100, 113);
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        .tweet-content{
+            font-size: 14px;
+            text-align: start;
+            margin-right: 10px;
+            color: rgb(15, 20, 25);
+            line-height: 19px;
+            white-space: pre-wrap;
+            font-weight: 400;
+        }
+        .tweet-icons{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .icon-contain {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .icon-contain > .item-tweet{
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            margin-right: 5px;
+        }
+        .icon-contain > .icon-number{
+            padding-top: 3px;
+            font-size: 12px;
+            color: #536471;
         }
     </style>
 </body>
