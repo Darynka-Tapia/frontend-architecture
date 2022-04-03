@@ -75,7 +75,6 @@
                     this.showFormTweet = false;
                 },
                 tweetDelete(index){
-                    console.log('index', index);
                     this.listTweets.splice(index, 1);
                 }
             },
@@ -183,7 +182,9 @@
                             <div class="tweet"  v-for="(tweet, index) in listTweets" :key="index">
                                 <div class="teewt-user-img"><img src="assets/platzi-logo.jpg" /></div>
                                 <div class="tweet-description">
-                                    <span class="delete-tweet" @click="tweetDelete(index)">x</span>
+                                    <div class="delete-tweet">
+                                        <span @click="tweetDelete(index)">x</span>
+                                    </div>
                                     <p class="teewt-user">
                                         <span class="name-tweet">
                                             {{tweet.name}} 
