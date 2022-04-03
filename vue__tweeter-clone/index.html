@@ -19,8 +19,11 @@
             data(){
                 return{
                     estado: 'Iniciar Sesión',
-                    open: false,
+                    open: true,
+                    showFormTweet: false,
                     username: '',
+                    messageTweet: null,
+                    showButtonTwittear: false,
                     listTweets: [
                         {
                             name: 'Platzi', 
@@ -49,9 +52,39 @@
                     ]
                 };
             },
+            methods: {
+                addTweet(){
+                    this.showFormTweet = true;
+                },
+                addTweetToArray(){
+                    if(!this.showButtonTwittear){return}
+                    console.log('add', this.listTweets);
+                    this.listTweets.push(
+                        {
+                            name: 'Platzi', 
+                            path: '@platzi', 
+                            time: '0m', 
+                            content: this.messageTweet
+                        }
+                    );
+                    this.closeAddTweet();
+                    this.messageTweet = null;
+                    console.log('add2', this.listTweets);
+                }, 
+                closeAddTweet(){
+                    this.showFormTweet = false;
+                },
+                tweetDelete(index){
+                    console.log('index', index);
+                    this.listTweets.splice(index, 1);
+                }
+            },
             watch:{
                 open(now, old){
                     this.estado = now ? 'App list' : 'Iniciar Sesión ';
+                }, 
+                messageTweet(now, old){
+                    this.showButtonTwittear = now !== '';
                 }
             },
             computed:{
@@ -100,11 +133,15 @@
                         <a href="https://www.flaticon.es/iconos-gratis/corazon" title="corazón iconos">Corazón iconos creados por Those Icons - Flaticon</a>
                         <a href="https://www.flaticon.es/iconos-gratis/subir" title="subir iconos">Subir iconos creados por Freepik - Flaticon</a>
                         <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by dmitri13 - Flaticon</a>
+                        <div> Iconos diseñados por <a href="https://www.flaticon.es/autores/icon-home" title="Icon home"> Icon home </a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es'</a></div>
+                        <a href="https://www.flaticon.es/iconos-gratis/mundo" title="mundo iconos">Mundo iconos creados por turkkub - Flaticon</a>
+                        <a href="https://www.flaticon.es/iconos-gratis/siguiente" title="siguiente iconos">Siguiente iconos creados por Roundicons - Flaticon</a>
+                        <a href="https://www.flaticon.es/iconos-gratis/tierra" title="tierra iconos">Tierra iconos creados por turkkub - Flaticon</a>
 
                     </div>
                     
                 </div>
-                <div v-else class="contain-wall">
+                <div v-if="open && !showFormTweet" class="contain-wall">
                     <div class="header">
                         <div class="title-page">
                             <div class="name">
@@ -126,7 +163,7 @@
                         <div class="menu">
                             <span class="icon"><img src="assets/menu.png" class="icon-menu"/></span>
                             <span class="icon"><img src="assets/email.png" class="icon-menu"/> </span>
-                            <span class="icon"><img src="assets/add.png" class="icon-menu"/> </span>
+                            <span class="icon pluma"><img src="assets/add.png" class="icon-menu"/> </span>
                             <span class="btn-follow"> Siguiendo </span> 
                         </div>
                         <div class="user-info">
@@ -143,9 +180,10 @@
                                 <span>Me gusta</span>
                         </div>
                         <div class="listado-tweets">
-                            <div class="tweet"  v-for="tweet in listTweets">
+                            <div class="tweet"  v-for="(tweet, index) in listTweets" :key="index">
                                 <div class="teewt-user-img"><img src="assets/platzi-logo.jpg" /></div>
                                 <div class="tweet-description">
+                                    <span class="delete-tweet" @click="tweetDelete(index)">x</span>
                                     <p class="teewt-user">
                                         <span class="name-tweet">
                                             {{tweet.name}} 
@@ -175,6 +213,33 @@
                                     </div>
                                 </div>
                             </div>    
+                        </div>
+                    </div>
+                    <div class="add-pluma" @click="addTweet()">
+                        <img src="assets/pluma.png" />
+                    </div>
+                </div>
+                <div v-if="open && showFormTweet" class="contain-wall">
+                    <div class="add-header">
+                        <img src="assets/flecha-regresar.png" @click="closeAddTweet()"/>
+                        <button :class="{'btn-disabled' : !showButtonTwittear}"
+                            @click="addTweetToArray()"
+                        >Twittear</button>
+                    </div>
+                    <div class="publish">
+                        <div class="teewt-user-img"><img src="assets/platzi-logo.jpg" /></div>
+                        <div class="new-tweet">
+                            <textarea
+                                v-model="messageTweet"
+                                name="notas" 
+                                rows=5 cols=20
+                                placeholder="¿Qué está pasando?"
+                            ></textarea>
+                            <p class="alcance">
+                                <img src="assets/mundo2.png" />
+                                Cualquier persona puede responder
+                            </p>
+                            <div class="aditamentos"></div>
                         </div>
                     </div>
                 </div>
@@ -228,6 +293,7 @@
             margin: 19px 0;
         }
         .btn-social{
+            cursor:pointer;
             width: 300px;
             height: 40px;
             border: 1px solid lightgray;
@@ -282,6 +348,7 @@
         .btn-siguiente{
             color: white;
             background-color: black;
+            cursor: pointer;
         }
         .btn-forgotten-password{
             color: black;
@@ -457,6 +524,17 @@
         .tweet-description .teewt-user{
             display: flex;
             text-align: start;
+            margin-top: 0px;
+        }
+        .delete-tweet{
+            justify-self: flex-end;
+            text-align: end;
+            align-self: initial;
+            display: flex;
+            justify-content: end;
+            padding-right: 10px;
+            color:rgb(83, 100, 113);
+            cursor: pointer;
         }
         .teewt-user>.name-tweet{
             font-weight: 600;
@@ -506,6 +584,93 @@
             padding-top: 3px;
             font-size: 12px;
             color: #536471;
+        }
+        .add-pluma {
+            background-color: #1d9bf0;
+            width: 30px;
+            height: 30px;
+            padding: 10px;
+            border-radius: 50px;
+
+            /* flotante */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            transition: all 300ms ease 0ms;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+        }
+        .add-pluma img{
+            width: 30px;
+            height: 30px;
+        }
+
+        /* added tweet*/
+
+        .add-header{
+            box-sizing: border-box;
+            display: flex;
+            padding: 0px 20px;
+            width: 100%;
+            height: 50px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .add-header > img{
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+        .add-header > button{
+            background-color: rgb(29, 155, 240);
+            color: white;
+            border: none;
+            border-radius: 99px;
+            font-size: 14px;
+            height: 28px;
+            width: 80px;
+            padding: 0 15px;
+        }
+        .add-header > button.btn-disabled{
+            opacity: 0.5;
+        }
+        .publish{
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            padding: 10px 0px;
+        }
+        .new-tweet{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-bottom: 1px solid lightgray;
+            margin-right: 20px;
+            margin-top: 15px;
+        }
+        .new-tweet > textarea{
+            border: 0px solid;
+            font-size: 19px;
+            color: rgb(15, 20, 25);
+            /* font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; */
+            
+            font-family: 'Anybody', cursive;
+        }
+        .new-tweet > textarea:focus {
+            outline: 0 none;
+        }
+        .alcance {
+            color: rgb(29, 155, 240);
+            font-weight: 600;
+            font-size: 13px;
+            text-align: start;
+            display: flex;
+            align-items: center;
+        }
+        .alcance > img{
+            margin-right: 5px;
+            width: 13px;
+            height: 13px;
+            object-fit: contain;
         }
     </style>
 </body>
