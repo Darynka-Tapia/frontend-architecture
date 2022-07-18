@@ -15,7 +15,7 @@
     <div id="app">
     </div>
     <script>
-        const vm = Vue.createApp({
+        const app = Vue.createApp({
             data(){
                 return{
                     estado: 'Iniciar Sesión',
@@ -179,41 +179,10 @@
                                 <span>Me gusta</span>
                         </div>
                         <div class="listado-tweets">
-                            <div class="tweet"  v-for="(tweet, index) in listTweets" :key="index">
-                                <div class="teewt-user-img"><img src="assets/platzi-logo.jpg" /></div>
-                                <div class="tweet-description">
-                                    <div class="delete-tweet">
-                                        <span @click="tweetDelete(index)">x</span>
-                                    </div>
-                                    <p class="teewt-user">
-                                        <span class="name-tweet">
-                                            {{tweet.name}} 
-                                            <img src="assets/verify.png" alt="verificado"/>
-                                        </span>
-                                        <span class="path-tweet">{{tweet.path}}</span>
-                                        <span class="time-tweet">• {{tweet.time}}</span>
-                                    </p>
-                                    <p class="tweet-content">{{tweet.content}}</p>
-                                    
-                                    <div class="tweet-icons">
-                                        <div class="icon-contain">
-                                            <img class="item-tweet" src="assets/burbuja.png"/>
-                                            <span class="icon-number">2</span>
-                                        </div>
-                                        <div class="icon-contain">
-                                            <img class="item-tweet" src="assets/flechas.png"/>
-                                            <span class="icon-number">3</span>
-                                        </div>
-                                        <div class="icon-contain">
-                                            <img class="item-tweet" src="assets/corazon.png"/>
-                                            <span class="icon-number">47</span>
-                                        </div>
-                                        <div class="icon-contain">
-                                            <img class="item-tweet" src="assets/subir.png"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>    
+                            <item 
+                                v-for="(tweet, index) in listTweets" 
+                                :key="index"
+                                :tweet="tweet"/>   
                         </div>
                     </div>
                     <div class="add-pluma" @click="addTweet()">
@@ -246,7 +215,49 @@
                 </div>
             </div>
             `
-        }).mount('#app');
+        })
+        
+        app.component('item', {
+            props: ["tweet"],
+            template: `
+            <div class="tweet">
+                <div class="teewt-user-img"><img src="assets/platzi-logo.jpg" /></div>
+                <div class="tweet-description">
+                    <div class="delete-tweet">
+                        <span @click="tweetDelete(index)">x</span>
+                    </div>
+                    <p class="teewt-user">
+                        <span class="name-tweet">
+                            {{tweet.name}} 
+                            <img src="assets/verify.png" alt="verificado"/>
+                        </span>
+                        <span class="path-tweet">{{tweet.path}}</span>
+                        <span class="time-tweet">• {{tweet.time}}</span>
+                    </p>
+                    <p class="tweet-content">{{tweet.content}}</p>
+                    <div class="tweet-icons">
+                        <div class="icon-contain">
+                            <img class="item-tweet" src="assets/burbuja.png"/>
+                            <span class="icon-number">2</span>
+                        </div>
+                        <div class="icon-contain">
+                            <img class="item-tweet" src="assets/flechas.png"/>
+                            <span class="icon-number">3</span>
+                        </div>
+                        <div class="icon-contain">
+                            <img class="item-tweet" src="assets/corazon.png"/>
+                            <span class="icon-number">47</span>
+                        </div>
+                        <div class="icon-contain">
+                            <img class="item-tweet" src="assets/subir.png"/>
+                        </div>
+                    </div>
+                </div>
+            </div> `
+
+        });
+        const vm = app.mount('#app');
+        console.log(vm.$ref);
     </script>
     <style>
         body{
