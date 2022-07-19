@@ -68,7 +68,7 @@ nav .profile-link a{
 
 /* main section */
 main .cover-container{
-    background-image: url('/assets/img/Cover.png');
+    background-image: url('../assets/img/Cover.png');
     background-repeat:no-repeat;
     background-size:cover;/**/
     background-position:center;
