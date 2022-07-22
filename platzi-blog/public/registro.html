@@ -18,15 +18,22 @@
 <body>
 
     <header class="registro-header">
+        <ul id="dropdown1" class="dropdown-content lista-contactos">
+            <li><a href="#!">Whatsapp</a></li>
+            <li><a href="#!">Messenger</a></li>
+            <li><a href="#!">contacto@fake.com</a></li>
+        </ul>
         <nav class="container">
-            <a href="/" class="brand-logo valign-wrapper z-depth-2">
-                <img src="assets/img/Logo.jpg" alt="Logo del blog" class="responsive-img left">
-            </a>
-            <ul class="right valign-wrapper">
-                <li><a href="#">Sobre Nosotros</a></li>
-                <li><a href="#">Contacto</a></li>
-                <li><a href="#" class="btn">Registro</a></li>
-            </ul>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo valign-wrapper z-depth-2">
+                    <img src="assets/img/Logo.jpg" alt="Logo del blog" class="responsive-img left">
+                </a>
+                <ul class="right valign-wrapper">
+                    <li><a href="about.html">Sobre Nosotros</a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Contacto<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a href="registro.html" class="btn">Registro</a></li>
+                </ul> 
+            </div>
         </nav>
         <section class="container">
             <div class="row registro-titulo">
@@ -121,5 +128,13 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!--End materialize-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.dropdown-trigger');
+            var instances = M.Dropdown.init(elems, {});
+        });
+    </script>
 </body>
 </html>

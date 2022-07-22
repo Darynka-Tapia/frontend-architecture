@@ -50,7 +50,11 @@ header ul a {
 .page-footer{
     background-color: #26A69A;
 }
-
+.dropdown-content.lista-contactos{
+    height: auto !important;
+    width: auto !important;
+    top: 100px !important;
+}
 /*post*/
 .row.post-recommended{
     display: flex;
@@ -74,4 +78,26 @@ header.registro-header{
 }
 .registro-titulo{
     margin-top: 80px;
+}
+
+/*about*/
+
+.about-header{
+    height: 15vh;
+}
+
+.container.about{
+    display: flex;
+}
+.container.about>.row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container.about>.row>.col{
+    margin: auto;
+}
+
+.card-action.knowledge > span{
+    float: none;
 }
